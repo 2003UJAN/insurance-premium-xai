@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 def load_model():
-    return joblib.load("../models/premium_model.pkl")
+    return joblib.load("/models/premium_model.pkl")
 
 def preprocess(df):
     df = df.drop(columns=["locality_name"])
