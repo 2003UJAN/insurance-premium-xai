@@ -1,6 +1,6 @@
 import folium
 
-def create_city_map(city_df):
+def create_map(city_df):
     lat = city_df["latitude"].mean()
     lon = city_df["longitude"].mean()
 
@@ -24,4 +24,3 @@ def create_city_map(city_df):
         ).add_to(m)
 
     return m
-
