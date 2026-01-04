@@ -1,11 +1,12 @@
 import streamlit as st
 from streamlit_folium import st_folium
-from utils.load_data import load_dataset
-from utils.map_utils import create_city_map
 
-df = load_dataset()
+from utils.load_data import load_dataset
+from utils.map_utils import create_map
 
 st.header("City-wise Insurance Premium Heatmap")
+
+df = load_dataset()
 
 city = st.selectbox("Select City", df["city_name"].unique())
 locality_type = st.selectbox(
@@ -21,6 +22,5 @@ filtered = df[
 if filtered.empty:
     st.warning("No data available.")
 else:
-    m = create_city_map(filtered)
+    m = create_map(filtered)
     st_folium(m, width=800, height=500)
-
