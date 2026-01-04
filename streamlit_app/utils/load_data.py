@@ -4,9 +4,8 @@ import os
 
 @st.cache_data
 def load_dataset():
-    # Resolve project root safely
     BASE_DIR = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "..", "..")
+        os.path.join(os.path.dirname(__file__), "..", "..")
     )
 
     data_path = os.path.join(
@@ -16,4 +15,5 @@ def load_dataset():
     )
 
     return pd.read_csv(data_path)
+
 
