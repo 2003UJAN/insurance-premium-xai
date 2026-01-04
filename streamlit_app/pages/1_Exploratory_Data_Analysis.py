@@ -1,17 +1,17 @@
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
-from utils.load_data import load_dataset
 
-df = load_dataset()
+from utils.load_data import load_dataset
 
 st.header("Exploratory Data Analysis")
 
-# City selector
+df = load_dataset()
+
 city = st.selectbox("Select City", df["city_name"].unique())
 city_df = df[df["city_name"] == city]
 
-st.subheader("Premium Distribution")
+st.subheader("Insurance Premium Distribution")
 fig, ax = plt.subplots()
 sns.histplot(city_df["insurance_premium"], bins=40, kde=True, ax=ax)
 st.pyplot(fig)
@@ -37,4 +37,3 @@ sns.scatterplot(
     ax=ax
 )
 st.pyplot(fig)
-
