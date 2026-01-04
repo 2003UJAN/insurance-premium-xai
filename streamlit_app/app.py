@@ -6,12 +6,13 @@ st.set_page_config(
 )
 
 st.title("Explainable AI for Insurance Premium Prediction")
+
 st.markdown("""
 This application demonstrates:
-- Exploratory Data Analysis  
-- City-wise premium heatmaps using OpenStreetMap  
-- Explainable AI (SHAP) for premium transparency  
+- 📊 Exploratory Data Analysis  
+- 🗺️ City-wise premium heatmaps (OpenStreetMap)  
+- 🧠 Explainable AI using SHAP  
 """)
 
-st.sidebar.success("Select a page from above 👆")
+st.sidebar.success("Select a page from the sidebar")
 
