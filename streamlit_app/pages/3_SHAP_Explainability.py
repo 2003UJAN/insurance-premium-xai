@@ -1,27 +1,52 @@
 import streamlit as st
 import shap
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from utils.load_data import load_dataset
 from utils.model_utils import load_model, preprocess
 
 st.header("SHAP Explainability")
 
+# Load data & model
 df = load_dataset()
 model = load_model()
 
+# Preprocess for model
 df_proc = preprocess(df.copy())
 X = df_proc.drop(columns=["insurance_premium"])
 
+# Select record
 idx = st.slider(
     "Select Record Index",
-    0,
-    len(X) - 1,
-    10
+    min_value=0,
+    max_value=len(df) - 1,
+    value=10
 )
 
+# -------------------------------
+# Show record details (RAW DATA)
+# -------------------------------
+st.subheader("Selected Record Details")
+
+record_raw = df.iloc[idx]
+
+# Display in a clean table (vertical)
+record_df = pd.DataFrame(record_raw).reset_index()
+record_df.columns = ["Feature", "Value"]
+
+st.dataframe(record_df, use_container_width=True)
+
+# -------------------------------
+# Prediction
+# -------------------------------
 prediction = model.predict(X.iloc[[idx]])[0]
 st.subheader(f"Predicted Premium: ₹ {int(prediction)}")
+
+# -------------------------------
+# SHAP Explainability
+# -------------------------------
+st.subheader("Why this premium? (SHAP Explanation)")
 
 explainer = shap.Explainer(model)
 shap_values = explainer(X)
