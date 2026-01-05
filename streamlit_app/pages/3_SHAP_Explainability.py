@@ -8,15 +8,19 @@ from utils.model_utils import load_model, preprocess
 
 st.header("SHAP Explainability")
 
-# Load data & model
+# -------------------------------------------------
+# Load data and model
+# -------------------------------------------------
 df = load_dataset()
 model = load_model()
 
-# Preprocess for model
+# Preprocess for model input
 df_proc = preprocess(df.copy())
 X = df_proc.drop(columns=["insurance_premium"])
 
-# Select record
+# -------------------------------------------------
+# Record selector
+# -------------------------------------------------
 idx = st.slider(
     "Select Record Index",
     min_value=0,
@@ -24,28 +28,28 @@ idx = st.slider(
     value=10
 )
 
-# -------------------------------
-# Show record details (RAW DATA)
-# -------------------------------
+# -------------------------------------------------
+# Show selected record details (WITHOUT last column)
+# -------------------------------------------------
 st.subheader("Selected Record Details")
 
-record_raw = df.iloc[idx]
+# Drop target column ONLY for display
+record_raw = df.iloc[idx].drop("insurance_premium")
 
-# Display in a clean table (vertical)
 record_df = pd.DataFrame(record_raw).reset_index()
 record_df.columns = ["Feature", "Value"]
 
 st.dataframe(record_df, use_container_width=True)
 
-# -------------------------------
+# -------------------------------------------------
 # Prediction
-# -------------------------------
+# -------------------------------------------------
 prediction = model.predict(X.iloc[[idx]])[0]
 st.subheader(f"Predicted Premium: ₹ {int(prediction)}")
 
-# -------------------------------
+# -------------------------------------------------
 # SHAP Explainability
-# -------------------------------
+# -------------------------------------------------
 st.subheader("Why this premium? (SHAP Explanation)")
 
 explainer = shap.Explainer(model)
