@@ -134,7 +134,7 @@ def create_hotspot_map(city_df):
             """,
 
 
-            color="red",
+            color="black",
 
 
             fill=True,
